@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Main page</title>
+<script type='text/javascript'>
+function showCases(value) {
+	var cases = document.getElementById("cases");
+	var verbs = document.getElementById("verbs");
+	var pronouns = document.getElementById("pronouns");
+	switch(value) {
+		case 'n':
+		case 'adj':
+			cases.value="nom";			
+			cases.removeAttribute("disabled");
+			verbs.value="";
+			verbs.setAttribute("disabled","disabled");
+			break;
+		case 'prn':  
+			cases.value="nom";			
+			cases.removeAttribute("disabled");
+			pronouns.value="pers";
+			pronouns.removeAttribute("disabled");
+			verbs.value="";
+			verbs.setAttribute("disabled","disabled");
+			break;
+		case 'v':
+			cases.value="";			
+			cases.setAttribute("disabled","disabled");
+			pronouns.value="";
+			pronouns.setAttribute("disabled","disabled");
+			verbs.value="tv";			
+			verbs.removeAttribute("disabled");
+			break;
+		default:
+			cases.value="";			
+			cases.setAttribute("disabled","disabled");
+			pronouns.value="";
+			pronouns.setAttribute("disabled","disabled");
+			verbs.value="";
+			verbs.setAttribute("disabled","disabled");
+			break;
+		
+	};
+};
+function changePerson(value) {
+	var num = document.getElementById("num");
+	var poss = document.getElementById("poss");
+	if(value!='') {
+		if(num.value==''){
+			num.value='sg';					
+		};
+		poss.value='';			
+		poss.setAttribute("disabled","disabled");
+	}else {
+		num.value='';
+		poss.removeAttribute("disabled");	
+	};
+};
+function changeNumber(value) {
+	var pers = document.getElementById("pers");
+	var poss = document.getElementById("poss");
+	if(value!='') {
+		if(pers.value==''){
+			pers.value='p1';					
+		};
+		poss.value='';			
+		poss.setAttribute("disabled","disabled");
+	}else {
+		pers.value='';
+		poss.removeAttribute("disabled");	
+	};
+};
+function changePossesion(value) {
+	var pers = document.getElementById("pers");
+	var num = document.getElementById("num");
+	if(value!='') {
+		pers.value='';			
+		pers.setAttribute("disabled","disabled");
+		num.value='';			
+		num.setAttribute("disabled","disabled");
+	}else {
+		pers.removeAttribute("disabled");
+		num.removeAttribute("disabled");	
+	};
+};
+</script>
+</head>
+<body>
+<form method="post" action="/main/" enctype="multipart/form-data">
+    {% csrf_token %}
+Выберите файл с текстом для разметки
+<input type="file" name="myfile"/>
+    <button type="submit">Загрузить файл</button>
+</form>
+<form action="/set_tag/" method="post">
+   {% csrf_token %}
+   <p style="color:#FF0000";>{{word}}</p>
+<p>Часть речи</p>
+<select size="1" name="tag" onchange="showCases(value);">
+    <option value="n">Зат есім (Существительное)</option>
+    <option value="np">Жалқы есім (Имя собственное)</option>
+    <option value="adj">Сын есім (Прилагательное)</option>
+    <option value="num">Сан есім (Числительное)</option>
+    <option value="prn">Есімдік (Местоимение)</option>
+    <option value="det">Детерминатив (Определитель)</option>
+    <option value="v">Етістік (Глагол)</option>
+    <option value="vaux">Көмекші етістік (Вспомогательный глагол)</option>
+    <option value="adv">Үстеу (Наречие)</option>
+    <option value="post">Септеулік шылау (Падежный послелог)</option>
+    <option value="postadv">Постүстеу</option>
+    <option value="cnjcoo">Cалаластырғыш жалғаулық (Соединительный союз)</option>
+    <option value="cnjsub">Cабақтастырғыш жалғаулық (Подчинительный союз)</option>
+    <option value="cnjadv">Үстеу-жалғаулық (Наречие-союз)</option>
+    <option value="ij">Одағай (Междометие)</option>
+    <option value="abbr">Қысқарған сөз (Аббревиатура)</option>
+    <option value="cop">Копула</option>
+    <option value="ideo">Еліктеу сөз (Звукоподражательные слова)</option>
+ </select>
+<p>Падеж</p>
+<select size="1" name="case" id="cases">	
+	<option value="nom">Атау септік (Именительный)</option>
+	<option value="gen">Ілік септік (Родительный)</option>
+	<option value="dat">Барыс септік (Дательный)</option>
+	<option value="acc">Табыс септік (Винительный)</option>
+	<option value="loc">Жатыс септік (Местный)</option>
+	<option value="abl">Шығыс септік (Исходный)</option>
+	<option value="ins">Көмектес септік (Творительный)</option>
+	<option value=""></option>
+</select>
+<p>Транзитивность (для глаголов)</p>
+<select size="1" name="verb" id="verbs" disabled="disabled">	
+	<option value=""></option>	
+	<option value="tv">Сабақты eтістік (Переходный)</option>
+	<option value="iv">Салт eтістік (Непереходный)</option>
+</select>
+<p>Вид местоимения</p>
+<select size="1" name="pronoun" id="pronouns" disabled="disabled">	
+	<option value=""></option>	
+	<option value="pers">Жiктеу (Личное)</option>
+	<option value="ref">Өздік (Возвратное)</option>
+	<option value="dem">Сiлтеу (Указательное)</option>
+	<option value="itg">Сұрау (Вопросительное)</option>
+	<option value="def">Жалпылау (Определительное)</option>
+	<option value="ind">Белгісіздік (Неопределенное)</option>
+	<option value="neg">Болымсыздық (Отрицательное)</option>
+</select>
+<p>Лицо</p>
+<select size="1" name="person" id="pers" onchange="changePerson(value);">	
+	<option value=""></option>	
+	<option value="p1">Бірінші жақ (1-е лицо)</option>
+	<option value="p2">Екінші жақ (2-е лицо)</option>
+	<option value="p3">Үшінші жақ (3-е лицо)</option>
+</select>
+<p>Число</p>
+<select size="1" name="number" id="num" onchange="changeNumber(value);">	
+	<option value=""></option>	
+	<option value="sg">Жекеше жалғау (Единственное число)</option>
+	<option value="pl">Көптік жалғау (Множественное число)</option>
+	<option value="sp">Жекеше немесе көптік (Единственное или множественное)</option>
+</select>
+<p>Притяжательная форма</p>
+<select size="1" name="poss" id="poss" onchange="changePossesion(value);">	
+	<option value=""></option>	
+	<option value="px1sg">Бірінші жақ жекеше жалғау (1-е лицо единственного числа)</option>
+	<option value="px2sg">Екінші жақ жекеше жалғау (2-е лицо единственного числа)</option>
+	<option value="px3sg">Үшінші жақ жекеше жалғау (3-е лицо единственного числа)</option>
+	<option value="px1pl">Бірінші жақ көптік жалғау (1-е лицо множественного числа)</option>
+	<option value="px2pl">Екінші жақ көптік жалғау (2-е лицо множественного числа)</option>
+	<option value="px3pl">Үшінші жақ көптік жалғау (3-е лицо множественного числа)</option>
+	<option value="px3sp">Үшінші жақ жекеше немесе көптік жалғау(3-е лицо единственного или множественного числа)</option>
+</select>
+<p><input type="submit" value="Пометить"></p>
+</form>
+<form action="/download_file/" method="post">
+   {% csrf_token %}
+<input type="submit" value="Выгрузить все помеченные слова в формате csv">
+</form>
+</body>
+</html>
