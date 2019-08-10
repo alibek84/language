@@ -9,38 +9,107 @@ function showCases(value) {
 	var pronouns = document.getElementById("pronouns");
 	switch(value) {
 		case 'n':
+		case 'np':
 		case 'adj':
 			cases.value="nom";			
 			cases.removeAttribute("disabled");
-			verbs.value="";
-			verbs.setAttribute("disabled","disabled");
+			disableVerbs();
+			disableNum();
 			break;
 		case 'prn':  
 			cases.value="nom";			
 			cases.removeAttribute("disabled");
 			pronouns.value="pers";
 			pronouns.removeAttribute("disabled");
-			verbs.value="";
-			verbs.setAttribute("disabled","disabled");
+			disableVerbs();
+			disableNum();
 			break;
 		case 'v':
+		case 'vaux':
 			cases.value="";			
 			cases.setAttribute("disabled","disabled");
 			pronouns.value="";
 			pronouns.setAttribute("disabled","disabled");
-			verbs.value="tv";			
-			verbs.removeAttribute("disabled");
+			enableVerbs();
+			disableNum();
+			break;
+		case 'num':
+			disableVerbs();
+			enableNum();
 			break;
 		default:
 			cases.value="";			
 			cases.setAttribute("disabled","disabled");
 			pronouns.value="";
 			pronouns.setAttribute("disabled","disabled");
-			verbs.value="";
-			verbs.setAttribute("disabled","disabled");
+			disableVerbs();
+			disableNum();
 			break;
 		
 	};
+};
+function disableVerbs() {
+	var verbs = document.getElementById("verbs");
+	var mood = document.getElementById("mood");
+	var derivation = document.getElementById("derivation");
+	var tense = document.getElementById("tense");
+	var prc = document.getElementById("prc");
+	var gna = document.getElementById("gna");
+	var gpr = document.getElementById("gpr");
+	var ger = document.getElementById("ger");
+	verbs.value="";
+	verbs.setAttribute("disabled","disabled");
+	mood.value="";
+	mood.setAttribute("disabled","disabled");
+	derivation.value="";
+	derivation.setAttribute("disabled","disabled");
+	tense.value="";
+	tense.setAttribute("disabled","disabled");
+	prc.value="";
+	prc.setAttribute("disabled","disabled");
+	gna.value="";
+	gna.setAttribute("disabled","disabled");
+	gpr.value="";
+	gpr.setAttribute("disabled","disabled");
+	ger.value="";
+	ger.setAttribute("disabled","disabled");
+};
+function enableVerbs() {
+	var verbs = document.getElementById("verbs");
+	var mood = document.getElementById("mood");
+	var derivation = document.getElementById("derivation");
+	var tense = document.getElementById("tense");
+	var prc = document.getElementById("prc");
+	var gna = document.getElementById("gna");
+	var gpr = document.getElementById("gpr");
+	var ger = document.getElementById("ger");
+	
+	verbs.value="tv";
+	verbs.removeAttribute("disabled");
+	mood.value="";
+	mood.removeAttribute("disabled");
+	derivation.value="";
+	derivation.removeAttribute("disabled");
+	tense.value="";
+	tense.removeAttribute("disabled");
+	prc.value="";
+	prc.removeAttribute("disabled");
+	gna.value="";
+	gna.removeAttribute("disabled");
+	gpr.value="";
+	gpr.removeAttribute("disabled");
+	ger.value="";
+	ger.removeAttribute("disabled");
+};
+function disableNum() {
+	var num = document.getElementById("num");
+	num.value="";
+	num.setAttribute("disabled","disabled");
+};
+function enableNum() {
+	var num = document.getElementById("num");
+	num.value="";
+	num.removeAttribute("disabled");
 };
 function changePerson(value) {
 	var num = document.getElementById("num");
@@ -83,7 +152,95 @@ function changePossesion(value) {
 		num.removeAttribute("disabled");	
 	};
 };
+function changePRC(value) {
+	var gna = document.getElementById("gna");
+	var gpr = document.getElementById("gpr");
+	var ger = document.getElementById("ger");
+	if(value!="") {
+		gna.value="";
+		gna.setAttribute("disabled","disabled");
+		gpr.value="";
+		gpr.setAttribute("disabled","disabled");
+		ger.value="";
+		ger.setAttribute("disabled","disabled");
+	} else {
+		gna.value="";
+		gna.removeAttribute("disabled");
+		gpr.value="";
+		gpr.removeAttribute("disabled");
+		ger.value="";
+		ger.removeAttribute("disabled");
+	};
+};
+function changeGNA(value) {
+	var prc = document.getElementById("prc");
+	var gpr = document.getElementById("gpr");
+	var ger = document.getElementById("ger");
+	if(value!="") {
+		prc.value="";
+		prc.setAttribute("disabled","disabled");
+		gpr.value="";
+		gpr.setAttribute("disabled","disabled");
+		ger.value="";
+		ger.setAttribute("disabled","disabled");
+	} else {
+		prc.value="";
+		prc.removeAttribute("disabled");
+		gpr.value="";
+		gpr.removeAttribute("disabled");
+		ger.value="";
+		ger.removeAttribute("disabled");
+	};
+};
+function changeGPR(value) {
+	var prc = document.getElementById("prc");
+	var gna = document.getElementById("gna");
+	var ger = document.getElementById("ger");
+	if(value!="") {
+		prc.value="";
+		prc.setAttribute("disabled","disabled");
+		gna.value="";
+		gna.setAttribute("disabled","disabled");
+		ger.value="";
+		ger.setAttribute("disabled","disabled");
+	} else {
+		prc.value="";
+		prc.removeAttribute("disabled");
+		gna.value="";
+		gna.removeAttribute("disabled");
+		ger.value="";
+		ger.removeAttribute("disabled");
+	};
+};
+function changeGER(value) {
+	var prc = document.getElementById("prc");
+	var gna = document.getElementById("gna");
+	var gpr = document.getElementById("gpr");
+	if(value!="") {
+		prc.value="";
+		prc.setAttribute("disabled","disabled");
+		gna.value="";
+		gna.setAttribute("disabled","disabled");
+		gpr.value="";
+		gpr.setAttribute("disabled","disabled");
+	} else {
+		prc.value="";
+		prc.removeAttribute("disabled");
+		gna.value="";
+		gna.removeAttribute("disabled");
+		gpr.value="";
+		gpr.removeAttribute("disabled");
+	};
+};
 </script>
+<style type="text/css">
+.verbclass {
+    width: 500px; /* Ширина */
+    margin: 0 10px 10px 0; /* Отступы */
+    padding: 10px 0; /* Поля сверху и снизу */
+    display: inline-block; /* Строчно-блочный элемент */
+   }
+</style>
 </head>
 <body>
 <form method="post" action="/main/" enctype="multipart/form-data">
@@ -94,7 +251,12 @@ function changePossesion(value) {
 </form>
 <form action="/set_tag/" method="post">
    {% csrf_token %}
+	<p>Текущее слово</p>
    <p style="color:#FF0000";>{{word}}</p>
+    <p>Лемма<br>
+   <input type="text" name="lemma" size="40" value={{word}}>
+  </p>
+
 <p>Часть речи</p>
 <select size="1" name="tag" onchange="showCases(value);">
     <option value="n">Зат есім (Существительное)</option>
@@ -116,6 +278,8 @@ function changePossesion(value) {
     <option value="cop">Копула</option>
     <option value="ideo">Еліктеу сөз (Звукоподражательные слова)</option>
  </select>
+
+
 <p>Падеж</p>
 <select size="1" name="case" id="cases">	
 	<option value="nom">Атау септік (Именительный)</option>
@@ -127,13 +291,99 @@ function changePossesion(value) {
 	<option value="ins">Көмектес септік (Творительный)</option>
 	<option value=""></option>
 </select>
-<p>Транзитивность (для глаголов)</p>
+<br/>
+<div class="verbclass">
+<p>Транзитивность глаголов</p>
 <select size="1" name="verb" id="verbs" disabled="disabled">	
 	<option value=""></option>	
 	<option value="tv">Сабақты eтістік (Переходный)</option>
 	<option value="iv">Салт eтістік (Непереходный)</option>
 </select>
-<p>Вид местоимения</p>
+</div>
+<div class="verbclass">
+<p>Наклонение</p>
+<select size="1" name="mood" id="mood" disabled="disabled">	
+	<option value=""></option>	
+	<option value="imp">Повелительное</option>
+	<option value="opt">Желательное</option>
+	<option value="evid">Доказательное</option>
+</select>
+</div>
+<div class="verbclass">
+<p>Залог</p>
+<select size="1" name="derivation" id="derivation" disabled="disabled">	
+	<option value=""></option>	
+	<option value="caus">Понудительный</option>
+	<option value="pass">Пассивный</option>
+	<option value="coop">Совместный</option>
+</select>
+</div>
+<div class="verbclass">
+<p>Формы глаголов</p>
+<select size="1" name="tense" id="tense" disabled="disabled">	
+	<option value=""></option>	
+	<option value="pres">Настоящая (для "жатыр", "тұр", "отыр" и "жүр")</option>
+	<option value="aor">-{E}</option>
+	<option value="past">Прошедшая -{G}{A}н</option>
+	<option value="ifi"> -{D}{I}</option>
+	<option value="ifi_evid"> -{I}пт{I}</option>
+	<option value="fut">Будущая -{I}р</option>
+	<option value="fut_plan">Будущая планируемая -{M}{A}{K}</option>
+	<option value="pih">Прошедшая несовершенная -{E}тін</option>
+</select>
+</div>
+<div class="verbclass">
+<p>Деепричастия</p>
+<select size="1" name="prc" id="prc" disabled="disabled" onchange="changePRC(value);">	
+	<option value=""></option>	
+	<option value="prc_perf">Совершенное -{I}п</option>
+	<option value="prc_impf">Несовершенное  -{E}</option>
+	<option value="prc_vol">Желание -{G}{I}</option>
+	<option value="prc_cond">Условное  -с{A}</option>
+	<option value="prc_fplan">Будущее планируемое -{M}{A}{K}</option>
+	<option value="prc_plan">Будущее -{G}{A}л{I}</option>
+</select>
+</div>
+<div class="verbclass">
+<p>Глагольные наречия</p>
+<select size="1" name="gna" id="gna" disabled="disabled" onchange="changeGNA(value);">	
+	<option value=""></option>	
+	<option value="gna_perf">Совершенное -{I}п</option>
+	<option value="gna_impf">Несовершенное  -{A}</option>
+	<option value="gna_cond">Условное -с{A}</option>
+	<option value="gna_until">До  -{G}{A}нш{A}</option>
+	<option value="gna_after">После -{G}{A}л{I}</option>
+</select>
+</div>
+<div class="verbclass">
+<p>Глагольные причастия</p>
+<select size="1" name="gpr" id="gpr" disabled="disabled" onchange="changeGPR(value);">	
+	<option value=""></option>	
+	<option value="gpr_past">Прошедшее -{G}{A}н</option>
+	<option value="gpr_impf">Несовершенное -{E}{T}{I}н</option>
+	<option value="gpr_pot">Потенциальное  -{U}ш{I}</option>
+	<option value="gpr_ppot">Потенциальное -{A}рл{I}{K}</option>
+	<option value="gpr_fut">Будущее -{I}р </option>
+</select>
+</div>
+<div class="verbclass">
+<p>Герундий</p>
+<select size="1" name="ger" id="ger" disabled="disabled" onchange="changeGER(value);">	
+	<option value=""></option>	
+	<option value="ger">-{U}</option>
+	<option value="ger_past">-{G}{A}н</option>
+	<option value="ger_perf">-{G}{A}нл{I}{K} </option>
+	<option value="ger_ppot">-{A}рл{I}{K} </option>
+	<option value="ger_abs">-уш{I}л{I}{K}  </option>
+	<option value="ger_fut">-{A}р</option>
+	<option value="ger_impf">-{E}{T}{I}н</option>
+	<option value="ger_obs">-{М}{А}{К}</option>
+	<option value="ger2">- {I}c</option>
+</select>
+</div>
+<br/>
+<div class="verbclass">
+<p>Местоимение</p>
 <select size="1" name="pronoun" id="pronouns" disabled="disabled">	
 	<option value=""></option>	
 	<option value="pers">Жiктеу (Личное)</option>
@@ -144,6 +394,17 @@ function changePossesion(value) {
 	<option value="ind">Белгісіздік (Неопределенное)</option>
 	<option value="neg">Болымсыздық (Отрицательное)</option>
 </select>
+</div>
+<div class="verbclass">
+<p>Числительное</p>
+<select size="1" name="num" id="num" disabled="disabled">	
+	<option value=""></option>	
+	<option value="ord">Порядковое</option>
+	<option value="coll">Собирательное</option>
+	<option value="dist">Дистрибутивное</option>
+</select>
+</div>
+<div class="verbclass">
 <p>Лицо</p>
 <select size="1" name="person" id="pers" onchange="changePerson(value);">	
 	<option value=""></option>	
@@ -151,6 +412,8 @@ function changePossesion(value) {
 	<option value="p2">Екінші жақ (2-е лицо)</option>
 	<option value="p3">Үшінші жақ (3-е лицо)</option>
 </select>
+</div>
+<div class="verbclass">
 <p>Число</p>
 <select size="1" name="number" id="num" onchange="changeNumber(value);">	
 	<option value=""></option>	
@@ -158,6 +421,8 @@ function changePossesion(value) {
 	<option value="pl">Көптік жалғау (Множественное число)</option>
 	<option value="sp">Жекеше немесе көптік (Единственное или множественное)</option>
 </select>
+</div>
+<div class="verbclass">
 <p>Притяжательная форма</p>
 <select size="1" name="poss" id="poss" onchange="changePossesion(value);">	
 	<option value=""></option>	
@@ -169,6 +434,7 @@ function changePossesion(value) {
 	<option value="px3pl">Үшінші жақ көптік жалғау (3-е лицо множественного числа)</option>
 	<option value="px3sp">Үшінші жақ жекеше немесе көптік жалғау(3-е лицо единственного или множественного числа)</option>
 </select>
+</div>
 <p><input type="submit" value="Пометить"></p>
 </form>
 <form action="/download_file/" method="post">
